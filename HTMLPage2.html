@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Application</title>
+</head>
+<body>
+    <h1>Recipe Application</h1>
+
+    <form id="recipeForm">
+        <label for="numIngredients">Enter the number of ingredients:</label>
+        <input type="number" id="numIngredients">
+        <button type="button" onclick="addIngredients()">Add Ingredients</button>
+
+        <div id="ingredientInputs"></div>
+
+        <label for="numSteps">Enter the number of steps:</label>
+        <input type="number" id="numSteps">
+        <button type="button" onclick="addSteps()">Add Steps</button>
+
+        <div id="stepInputs"></div>
+
+        <button type="button" onclick="displayRecipe()">Display Recipe</button>
+        <label for="scalingFactor">Enter scaling factor (0.5, 2, or 3):</label>
+        <input type="number" id="scalingFactor">
+        <button type="button" onclick="scaleRecipe()">Scale Recipe</button>
+        <button type="button" onclick="resetQuantities()">Reset Quantities</button>
+        <button type="button" onclick="clearAllData()">Clear All Data</button>
+
+        <div id="recipeOutput"></div>
+    </form>
+
+    <script>var recipe = {
+            ingredients: [],
+            steps: []
+        };
+
+        function addIngredients() {
+            var numIngredients = document.getElementById("numIngredients").value;
+            for (var i = 0; i < numIngredients; i++) {
+                var name = prompt("Enter ingredient name:");
+                var quantity = parseFloat(prompt("Enter quantity:"));
+                var unit = prompt("Enter unit of measurement:");
+                recipe.ingredients.push({ Name: name, Quantity: quantity, Unit: unit });
+            }
+        }
+
+        function addSteps() {
+            var numSteps = document.getElementById("numSteps").value;
+            for (var i = 0; i < numSteps; i++) {
+                var description = prompt("Enter step " + (i + 1) + ":");
+                recipe.steps.push({ Description: description });
+            }
+        }
+
+        function displayRecipe() {
+            var output = document.getElementById("recipeOutput");
+            output.innerHTML = "<h2>Recipe</h2><h3>Ingredients</h3>";
+            recipe.ingredients.forEach(function(ingredient) {
+                output.innerHTML += "<p>" + ingredient.Quantity + " " + ingredient.Unit + " of " + ingredient.Name + "</p>";
+            });
+            output.innerHTML += "<h3>Steps</h3>";
+            recipe.steps.forEach(function(step, index) {
+                output.innerHTML += "<p>" + (index + 1) + ". " + step.Description + "</p>";
+            });
+        }
+
+        function scaleRecipe() {
+            var factor = parseFloat(document.getElementById("scalingFactor").value);
+            recipe.ingredients.forEach(function(ingredient) {
+                ingredient.Quantity *= factor;
+            });
+        }
+
+        function resetQuantities() {
+            // Reset all ingredient quantities to original values
+        }
+
+        function clearAllData() {
+            recipe = {
+                ingredients: [],
+                steps: []
+            };
+            document.getElementById("recipeOutput").innerHTML = "";
+        }</script>
+</body>
+</html>
